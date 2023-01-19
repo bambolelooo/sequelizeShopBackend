@@ -48,14 +48,82 @@ router.get("/:id", (req, res) => {
 
 router.post("/", (req, res) => {
 	// create a new category
+	// req body should look like this
+	// {
+	// 	'category_name': "something"
+	// }
+
+	if (req.body.category_name) {
+		Category.create({
+			tag_name: req.body.category_name,
+		})
+			.then((result) => {
+				res.status(200).json(result);
+			})
+			.catch((err) => {
+				if (err.name === "SequelizeUniqueConstraintError")
+					return res.status(409).json("This category already exists");
+				return res.status(400).json(err);
+			});
+	} else {
+		return res
+			.status(400)
+			.json(
+				'req body should look like this: {"category_name": "something"}'
+			);
+	}
 });
 
 router.put("/:id", (req, res) => {
 	// update a category by its `id` value
+	// req body should look like this
+	// {
+	// 	"category_name": "something"
+	// }
+	if (req.body.category_name) {
+		Category.update(
+			{
+				tag_name: req.body.category_name,
+			},
+			{
+				where: { id: req.params.id },
+			}
+		)
+			.then((result) => {
+				if (result[0] === 1) res.status(200).json("Category updated");
+				else
+					res.status(400).json(
+						"Category not updated (id not found or category already exists)"
+					);
+			})
+			.catch((err) => {
+				if (err.name === "SequelizeUniqueConstraintError")
+					return res.status(409).json("This category already exists");
+				return res.status(400).json(err);
+			});
+	} else {
+		return res
+			.status(400)
+			.json(
+				'req body should look like this: {"category_name": "something"}'
+			);
+	}
 });
 
 router.delete("/:id", (req, res) => {
 	// delete a category by its `id` value
+	Category.destroy({
+		where: {
+			id: req.params.id,
+		},
+	})
+		.then(() => {
+			return res.json("Category removed");
+		})
+		.catch((error) => {
+			console.log(error);
+			return res.json(error);
+		});
 });
 
 module.exports = router;

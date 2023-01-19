@@ -111,20 +111,7 @@ router.delete("/:id", (req, res) => {
 		},
 	})
 		.then(() => {
-			Tag.findAll({
-				include: [
-					{
-						model: Product,
-					},
-				],
-			})
-				.then((tags) => {
-					return res.json(tags);
-				})
-				.catch((error) => {
-					console.log(error);
-					res.send(error);
-				});
+			return res.json("Tag removed");
 		})
 		.catch((error) => {
 			console.log(error);
