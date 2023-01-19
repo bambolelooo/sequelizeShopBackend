@@ -128,6 +128,34 @@ router.put("/:id", (req, res) => {
 
 router.delete("/:id", (req, res) => {
 	// delete one product by its `id` value
+	Product.destroy({
+		where: {
+			id: req.params.id,
+		},
+	})
+		.then(() => {
+			Product.findAll({
+				include: [
+					{
+						model: Category,
+					},
+					{
+						model: Tag,
+					},
+				],
+			})
+				.then((products) => {
+					return res.json(products);
+				})
+				.catch((error) => {
+					console.log(error);
+					res.send(error);
+				});
+		})
+		.catch((error) => {
+			console.log(error);
+			return res.json(error);
+		});
 });
 
 module.exports = router;
