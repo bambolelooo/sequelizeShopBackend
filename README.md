@@ -112,6 +112,8 @@
     ```
 3. Install Insomnia from [official website](https://insomnia.rest/)
 4. Import Insomnia document (follow the walkthrough video)
+5. Create a .env file in root folder and add credentials there ![image](https://user-images.githubusercontent.com/63548697/213839798-8c62e78a-ca41-4812-b2c3-bd5c7be0e6ed.png)
+
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
