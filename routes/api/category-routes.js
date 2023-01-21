@@ -55,7 +55,7 @@ router.post("/", (req, res) => {
 
 	if (req.body.category_name) {
 		Category.create({
-			tag_name: req.body.category_name,
+			category_name: req.body.category_name,
 		})
 			.then((result) => {
 				res.status(200).json(result);
@@ -83,7 +83,7 @@ router.put("/:id", (req, res) => {
 	if (req.body.category_name) {
 		Category.update(
 			{
-				tag_name: req.body.category_name,
+				category_name: req.body.category_name,
 			},
 			{
 				where: { id: req.params.id },
