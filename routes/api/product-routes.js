@@ -134,23 +134,7 @@ router.delete("/:id", (req, res) => {
 		},
 	})
 		.then(() => {
-			Product.findAll({
-				include: [
-					{
-						model: Category,
-					},
-					{
-						model: Tag,
-					},
-				],
-			})
-				.then((products) => {
-					return res.json(products);
-				})
-				.catch((error) => {
-					console.log(error);
-					res.send(error);
-				});
+			return res.json("Product removed");
 		})
 		.catch((error) => {
 			console.log(error);
